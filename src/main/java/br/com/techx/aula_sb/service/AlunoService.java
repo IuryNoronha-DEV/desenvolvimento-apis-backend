@@ -16,5 +16,14 @@ public class AlunoService {
     public List<Aluno> findAll(){
         return alunoRepository.findAll();
     }
+    public Aluno findByID(Long id){
+        return alunoRepository.findById(id).orElse(null);
+    }
+    public Aluno save(Aluno aluno){
+        return alunoRepository.save(aluno);
+    }
+    public List<Aluno> findByNome(String nome){
+        return alunoRepository.findByNome(nome);
+    }
 }
 
