@@ -1,3 +1,4 @@
+
 package br.com.techx.aula_sb.controller;
 
 import br.com.techx.aula_sb.dto.AlunoRequest;
@@ -44,23 +45,14 @@ public class AlunoController {
     public ResponseEntity<Void> update(
             @PathVariable Long id,
             @RequestBody AlunoRequest request) {
-        boolean atualizado = alunoService.update(id, request);
 
-        if (atualizado) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        alunoService.update(id, request);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        boolean removido = alunoService.delete(id);
-
-        if (removido) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        alunoService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

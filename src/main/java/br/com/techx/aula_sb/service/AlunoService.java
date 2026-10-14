@@ -1,3 +1,4 @@
+
 package br.com.techx.aula_sb.service;
 
 import br.com.techx.aula_sb.dto.AlunoRequest;
@@ -49,30 +50,23 @@ public class AlunoService {
         }
     }
 
-    public boolean update(Long id, AlunoRequest request) {
-        Optional<Aluno> optional = alunoRepository.findById(id);
+    public void update(Long id, AlunoRequest request) {
+        Aluno aluno = alunoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
 
-        if (optional.isPresent()) {
-            Aluno aluno = optional.get();
-            aluno.setNome(request.getNome());
-            aluno.setIdade(request.getIdade());
-            aluno.setRa(request.getRa());
-            alunoRepository.save(aluno);
-            return true;
-        } else {
-            return false;
-        }
+        aluno.setNome(request.getNome());
+        aluno.setIdade(request.getIdade());
+        aluno.setRa(request.getRa());
+
+        alunoRepository.save(aluno);
     }
 
-    public boolean delete(Long id) {
-        Optional<Aluno> optional = alunoRepository.findById(id);
-
-        if (optional.isPresent()) {
-            alunoRepository.delete(optional.get());
-            return true;
-        } else {
-            return false;
+    public void deleteById(Long id) {
+        if (!alunoRepository.existsById(id)) {
+            throw new RuntimeException("Aluno não encontrado");
         }
+
+        alunoRepository.deleteById(id);
     }
 
     private AlunoResponse toResponse(Aluno aluno) {
